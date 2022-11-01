@@ -5,8 +5,8 @@ USE Locadoura2
 GO
 CREATE TABLE Filme (
 ID					INTEGER				NOT NULL,
-Titulo				VARCHAR				NOT NULL,
-Ano					INTEGER				NULL
+Titulo			VARCHAR				NOT NULL,
+Ano				INTEGER				NULL
 PRIMARY KEY (ID)
 )
 
@@ -20,18 +20,18 @@ PRIMARY KEY (ID)
 
 GO
 CREATE TABLE Cliente (
-Num_Cadastro		INTEGER				NOT NULL,
+Num_Cadastro	INTEGER				NOT NULL,
 Nome				VARCHAR(70)			NOT NULL,
-Logradouro			VARCHAR(150)		NOT NULL,
-Num					INTEGER				NOT NULL,
-CEP					CHAR(8)				NULL
+Logradouro		VARCHAR(150)		NOT NULL,
+Num				INTEGER				NOT NULL,
+CEP				CHAR(8)				NULL
 PRIMARY KEY (Num_Cadastro)
 )
 
 GO
 CREATE TABLE Filme_Estrela (
 Filme_ID			INTEGER				NOT NULL,
-Estrela_ID			INTEGER				NOT NULL
+Estrela_ID		INTEGER				NOT NULL
 
 FOREIGN KEY (Filme_ID) REFERENCES Filme (ID),
 FOREIGN KEY (Estrela_ID) REFERENCES Estrela (ID)
@@ -39,9 +39,9 @@ FOREIGN KEY (Estrela_ID) REFERENCES Estrela (ID)
 
 GO
 CREATE TABLE DVD (
-Num					INTEGER				NOT NULL,
-Data_Fabricacao		DATE				NOT NULL,
-Filme_ID			INTEGER				NOT NULL
+Num					INTEGER			NOT NULL,
+Data_Fabricacao	DATE				NOT NULL,
+Filme_ID			   INTEGER			NOT NULL
 PRIMARY KEY (Num),
 FOREIGN KEY (Filme_ID) REFERENCES Filme (ID)
 
@@ -51,17 +51,14 @@ GO
 CREATE TABLE Locacao (
 DVD_Num					INTEGER				NOT NULL,
 Cliente_Num_Cadastro	INTEGER				NOT NULL,
-Data_Locacao			DATE				NOT NULL	DEFAULT (GETDATE()),
-Data_Devolucao			DATE				NOT NULL,
-Valor					DECIMAL (7, 2)		NOT NULL
+Data_Locacao			DATE			   	NOT NULL	DEFAULT (GETDATE()),
+Data_Devolucao			DATE				   NOT NULL,
+Valor				   	DECIMAL (7, 2)		NOT NULL
 
 PRIMARY KEY (Data_Locacao, DVD_Num, Cliente_Num_Cadastro)
 FOREIGN KEY (DVD_Num) REFERENCES DVD (Num),
 FOREIGN KEY (Cliente_Num_Cadastro) REFERENCES Cliente (Num_Cadastro)
 )
-
-
-
 
 GO
 ALTER TABLE Filme
@@ -72,11 +69,9 @@ GO
 ALTER TABLE DVD
 ADD CHECK (Data_Fabricacao < GETDATE())
 
-
 GO
 ALTER TABLE Cliente
 ADD CHECK (Num > 0)
-
 
 GO
 ALTER TABLE Cliente
@@ -198,7 +193,9 @@ WHERE ID = 1006
 SELECT ID, Ano, CASE WHEN LEN (Titulo) > 10
 THEN RTRIM (SUBSTRING(Titulo, 1, 10)) + '...'
 ELSE
-   Titulo
+ 
+ Titulo
+ 
 END AS Titulo
 FROM Filme
 WHERE ID IN
